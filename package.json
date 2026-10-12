@@ -1,0 +1,21 @@
+{
+  "name": "nextera",
+  "version": "0.1.0",
+  "private": true,
+  "engines": {
+    "node": "22.x"
+  },
+  "workspaces": [
+    "packages/*",
+    "admin",
+    "client"
+  ],
+  "scripts": {
+    "dev:client": "npm run dev -w @nextera/client",
+    "dev:admin": "npm run dev -w @nextera/admin",
+    "test": "npm run test --workspaces --if-present",
+    "typecheck": "npm run typecheck --workspaces --if-present",
+    "lint": "npm run lint --workspaces --if-present",
+    "build": "npm run build --workspaces --if-present"
+  }
+}
