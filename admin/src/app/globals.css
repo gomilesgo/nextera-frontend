@@ -1,0 +1,105 @@
+@import "tailwindcss";
+
+@theme inline {
+  --color-inkwell: #061018;
+  --color-horizon: #0c1c24;
+  --color-ink: #122027;
+  --color-lagoon: #3ec6c1;
+  --color-gold: #d4a24a;
+  --color-parchment: #f3ebd8;
+  --color-dust: #8a9aa3;
+  --color-ember: #c45c26;
+  --color-moss: #7fb069;
+  --color-background: var(--color-inkwell);
+  --color-foreground: var(--color-parchment);
+  --color-card: var(--color-horizon);
+  --color-primary: var(--color-gold);
+  --color-primary-foreground: var(--color-ink);
+  --color-muted-foreground: var(--color-dust);
+  --color-destructive: var(--color-ember);
+  --color-border: color-mix(in srgb, var(--color-parchment) 12%, transparent);
+  --color-input: color-mix(in srgb, var(--color-parchment) 16%, transparent);
+  --color-ring: var(--color-lagoon);
+  --font-sans: var(--font-instrument);
+  --font-mono: var(--font-plex);
+}
+
+html,
+body {
+  background: var(--color-inkwell);
+  color: var(--color-parchment);
+}
+
+body {
+  font-family: var(--font-sans), sans-serif;
+  font-feature-settings: "ss01" on, "cv11" on, "tnum" on;
+  font-size: 0.875rem;
+  line-height: 1.45;
+}
+
+button,
+a,
+input,
+select,
+textarea {
+  touch-action: manipulation;
+}
+
+::selection {
+  background: color-mix(in srgb, var(--color-gold) 70%, transparent);
+  color: var(--color-inkwell);
+}
+
+a {
+  text-underline-offset: 0.22em;
+}
+
+.font-mono {
+  font-family: var(--font-mono), ui-monospace, monospace;
+}
+
+.hairline {
+  border: 1px solid var(--color-border);
+}
+
+.eyebrow {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--color-dust);
+}
+
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.data-table th {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 10.5px;
+  font-weight: 400;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-dust);
+  text-align: left;
+  padding: 0.5rem 0.75rem;
+  border-bottom: 1px solid var(--color-border);
+  white-space: nowrap;
+}
+
+.data-table td {
+  padding: 0.55rem 0.75rem;
+  border-bottom: 1px solid color-mix(in srgb, var(--color-parchment) 7%, transparent);
+  vertical-align: middle;
+}
+
+.data-table tbody tr:hover {
+  background: color-mix(in srgb, var(--color-parchment) 3%, transparent);
+}
+
+.data-table .num {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}

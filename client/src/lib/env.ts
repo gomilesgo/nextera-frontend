@@ -1,0 +1,24 @@
+import { z } from "zod";
+
+const serverEnvSchema = z.object({
+  NEXTERA_BACKEND_URL: z
+    .string({ required_error: "NEXTERA_BACKEND_URL is required" })
+    .trim()
+    .url("NEXTERA_BACKEND_URL must be an absolute URL"),
+  NEXTERA_PORTAL_SERVICE_KEY: z
+    .string({ required_error: "NEXTERA_PORTAL_SERVICE_KEY is required" })
+    .trim()
+    .min(16, "NEXTERA_PORTAL_SERVICE_KEY must be at least 16 characters"),
+  NEXTERA_BACKEND_TIMEOUT_MS: z.coerce.number().int().min(1000).max(60000).default(10000),
+});
+
+export type ServerEnv = z.infer<typeof serverEnvSchema>;
+
+export function parseServerEnv(source: Record<string, string | undefined>): ServerEnv {
+  const result = serverEnvSchema.safeParse(source);
+  if (!result.success) {
+    const problems = result.error.issues.map((issue) => issue.message).join("; ");
+    throw new Error(`Invalid client environment: ${problems}`);
+  }
+  return result.data;
+}
