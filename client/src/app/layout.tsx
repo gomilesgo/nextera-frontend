@@ -1,23 +1,24 @@
 import type { Metadata, Viewport } from "next";
-import { IBM_Plex_Mono, Instrument_Sans, Syne } from "next/font/google";
+import { IBM_Plex_Mono, IBM_Plex_Sans, IBM_Plex_Serif } from "next/font/google";
 import { brand } from "@/lib/site";
 import "./globals.css";
 
-const syne = Syne({
+const plexSerif = IBM_Plex_Serif({
   subsets: ["latin"],
-  variable: "--font-syne",
-  weight: ["500", "600", "700", "800"],
+  variable: "--font-plex-serif",
+  weight: ["400", "500", "600"],
+  style: ["normal", "italic"],
 });
 
-const instrument = Instrument_Sans({
+const plexSans = IBM_Plex_Sans({
   subsets: ["latin"],
-  variable: "--font-instrument",
+  variable: "--font-plex-sans",
   weight: ["400", "500", "600", "700"],
 });
 
-const plex = IBM_Plex_Mono({
+const plexMono = IBM_Plex_Mono({
   subsets: ["latin"],
-  variable: "--font-plex",
+  variable: "--font-plex-mono",
   weight: ["400", "500"],
 });
 
@@ -27,7 +28,7 @@ export const viewport: Viewport = {
   maximumScale: 5,
   viewportFit: "cover",
   colorScheme: "dark",
-  themeColor: "#061018",
+  themeColor: "#0c1220",
 };
 
 export const metadata: Metadata = {
@@ -50,7 +51,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en-IN"
-      className={`${syne.variable} ${instrument.variable} ${plex.variable} h-full antialiased`}
+      className={`${plexSerif.variable} ${plexSans.variable} ${plexMono.variable} h-full antialiased`}
     >
       <body className="min-h-full bg-inkwell font-sans text-parchment">
         <a

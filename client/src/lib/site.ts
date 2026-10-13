@@ -11,9 +11,21 @@ export const brand = {
 };
 
 export const publicNav = [
+  { href: "/#year", label: "The year" },
   { href: "/#plans", label: "Plans" },
   { href: "/#calculator", label: "Calculator" },
-  { href: "/#how-it-works", label: "How it works" },
+  { href: "/#process", label: "How it works" },
+  { href: "/#risks", label: "Risks" },
+  { href: "/enquire", label: "Enquire" },
+];
+
+/**
+ * The landing page carries its own dated index in the instrument bar, so the
+ * top bar stays short: the two things a visitor jumps to, and the one ask.
+ */
+export const headerNav = [
+  { href: "/#plans", label: "Plans" },
+  { href: "/#calculator", label: "Calculator" },
   { href: "/enquire", label: "Enquire" },
 ];
 
@@ -34,19 +46,19 @@ export const portalNav = [
 export const steps = [
   {
     title: "Choose a plan",
-    body: "Each plan has a fixed annual rate, a fixed tenure and a clear minimum. The calculator shows every monthly credit before you commit.",
+    body: "Every plan shows its annual rate, its tenure, and the smallest and largest amount it accepts. The calculator turns an amount into the monthly credit, the running total, and the date the principal comes back. Compare them before you pay.",
   },
   {
     title: "Verify once",
-    body: "Sign in with your mobile number, then complete KYC with your PAN, address and bank account. We verify the account before any money moves.",
+    body: "Sign in with a one-time code on your mobile number. Then complete KYC with your PAN, name, date of birth and address, and add the bank account that should receive money. We verify that account before the first investment. You do this once.",
   },
   {
     title: "Invest and sign",
-    body: "Pay securely online and accept your agreement with a one-time code. Your bond certificate is issued to your portal.",
+    body: "Choose the amount, read the agreement, and accept it with another one-time code. Pay online. When the payment is confirmed, the bond certificate is added to your documents.",
   },
   {
     title: "Receive monthly returns",
-    body: "Returns are credited every month as simple interest. Withdraw credited returns at any time; your principal is returned at maturity.",
+    body: "Each due date, the credit is added to your wallet. You can ask to withdraw credited returns. A member of the team approves that request before it is paid to your bank. The principal stays invested until maturity, then it joins the wallet too.",
   },
 ];
 

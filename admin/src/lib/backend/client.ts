@@ -96,6 +96,11 @@ export function parseErrorBody(body: unknown, status: number): BackendError {
   return parsed;
 }
 
+export function backendEndpoint(baseUrl: string, path: string): string {
+  const base = baseUrl.endsWith("/") ? baseUrl : `${baseUrl}/`;
+  return new URL(path.replace(/^\//, ""), base).href;
+}
+
 function parseJson(text: string): unknown {
   if (!text) return undefined;
   try {
@@ -106,7 +111,6 @@ function parseJson(text: string): unknown {
 }
 
 export function createBackendClient(options: BackendClientOptions): BackendClient {
-  const baseUrl = options.baseUrl.replace(/\/+$/, "");
   const doFetch = options.fetch ?? fetch;
   const timeoutMs = options.timeoutMs ?? DEFAULT_TIMEOUT_MS;
 
@@ -129,7 +133,7 @@ export function createBackendClient(options: BackendClientOptions): BackendClien
       let response: Response;
       let text: string;
       try {
-        response = await doFetch(`${baseUrl}${path}`, {
+        response = await doFetch(backendEndpoint(options.baseUrl, path), {
           method: init.method ?? "GET",
           headers,
           body: form ? form.bytes : init.json === undefined ? undefined : JSON.stringify(init.json),

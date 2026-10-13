@@ -6,10 +6,13 @@ const columns = [
   {
     title: "Nextera",
     items: [
+      { href: "/#balances", label: "What stays, what moves" },
+      { href: "/#year", label: "A year, written out" },
       { href: "/#plans", label: "Plans" },
       { href: "/#calculator", label: "Returns calculator" },
-      { href: "/#how-it-works", label: "How it works" },
-      { href: "/#disclosures", label: "Disclosures" },
+      { href: "/#process", label: "How it works" },
+      { href: "/#record", label: "Your portal" },
+      { href: "/#risks", label: "Disclosures" },
     ],
   },
   {
@@ -23,7 +26,7 @@ const columns = [
 
 export function PublicFooter() {
   return (
-    <footer className="relative overflow-hidden border-t border-parchment/10 bg-inkwell">
+    <footer className="relative z-[1] overflow-hidden border-t border-parchment/10 bg-inkwell">
       <p
         aria-hidden="true"
         className="pointer-events-none absolute -bottom-4 left-0 font-display text-[16vw] leading-none text-parchment/[0.035] sm:-bottom-8"

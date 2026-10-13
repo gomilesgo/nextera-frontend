@@ -9,8 +9,8 @@ const base =
   "inline-flex shrink-0 touch-manipulation items-center justify-center gap-2 rounded-full text-center font-medium tracking-wide whitespace-nowrap transition-colors duration-200 outline-none focus-visible:ring-2 focus-visible:ring-lagoon/70 focus-visible:ring-offset-2 focus-visible:ring-offset-inkwell disabled:pointer-events-none disabled:opacity-50 aria-disabled:pointer-events-none aria-disabled:opacity-50";
 
 const variants: Record<Variant, string> = {
-  gold: "bg-gold text-ink hover:bg-parchment",
-  ghost: "border border-parchment/25 text-parchment hover:border-lagoon hover:text-lagoon",
+  gold: "bg-gold text-ink hover:brightness-110",
+  ghost: "border border-parchment/25 text-parchment hover:border-gold hover:text-gold",
   quiet: "text-parchment/75 hover:bg-horizon hover:text-parchment",
   danger: "border border-ember/50 text-ember hover:bg-ember/10",
 };

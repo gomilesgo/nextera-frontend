@@ -5,17 +5,37 @@ import { useEffect, useState } from "react";
 import { BrandLink } from "@/components/brand/BrandLink";
 import { buttonClass } from "@/components/ui/Button";
 import { cx } from "@/lib/cx";
-import { publicNav } from "@/lib/site";
+import { headerNav, publicNav } from "@/lib/site";
 
 export function PublicHeader() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 32);
-    onScroll();
+    // Coalesced into a frame and compared before setting state, so an ordinary
+    // scroll does not queue a React render per scroll event.
+    let frame = 0;
+    // Starts from the server-rendered value; the first frame syncs it.
+    let current = false;
+
+    const read = () => {
+      frame = 0;
+      const next = window.scrollY > 32;
+      if (next === current) return;
+      current = next;
+      setScrolled(next);
+    };
+    const onScroll = () => {
+      if (frame) return;
+      frame = requestAnimationFrame(read);
+    };
+
+    frame = requestAnimationFrame(read);
     window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+    return () => {
+      if (frame) cancelAnimationFrame(frame);
+      window.removeEventListener("scroll", onScroll);
+    };
   }, []);
 
   useEffect(() => {
@@ -41,14 +61,18 @@ export function PublicHeader() {
       <div
         className={cx(
           "border-b transition-colors duration-300",
-          scrolled || open ? "border-parchment/10 bg-inkwell/90 backdrop-blur-md" : "border-transparent bg-transparent",
+          // Smaller blur radii: the header is on screen for the whole scroll,
+          // and a 24px backdrop blur there is the most expensive thing on it.
+          scrolled || open
+            ? "border-parchment/15 bg-inkwell/90 shadow-[inset_0_1px_0_rgba(244,247,241,0.16)] backdrop-blur-sm"
+            : "border-transparent bg-inkwell/25 backdrop-blur-sm",
         )}
       >
         <div className="mx-auto flex max-w-[1320px] items-center justify-between gap-3 px-4 py-3 sm:px-6 md:px-8">
           <BrandLink />
 
-          <nav aria-label="Main" className="hidden items-center gap-6 lg:flex">
-            {publicNav.map((item) => (
+          <nav aria-label="Main" className="hidden items-center gap-7 lg:flex">
+            {headerNav.map((item) => (
               <Link
                 key={item.href}
                 href={item.href}

@@ -20,6 +20,7 @@ type Props = {
   initialAmountPaise?: number;
   lockPlan?: boolean;
   note?: string;
+  surface?: "solid" | "glass";
 };
 
 function Stat({ label, value, sub, lead }: { label: string; value: string; sub?: string; lead?: boolean }) {
@@ -39,7 +40,15 @@ function Stat({ label, value, sub, lead }: { label: string; value: string; sub?:
   );
 }
 
-export function ReturnsCalculator({ plans, startDate, initialSlug, initialAmountPaise, lockPlan, note }: Props) {
+export function ReturnsCalculator({
+  plans,
+  startDate,
+  initialSlug,
+  initialAmountPaise,
+  lockPlan,
+  note,
+  surface = "solid",
+}: Props) {
   const fallback = plans[0];
   const initialPlan = plans.find((plan) => plan.slug === initialSlug) ?? fallback;
   const [slug, setSlug] = useState(initialPlan?.slug ?? "");
@@ -70,7 +79,11 @@ export function ReturnsCalculator({ plans, startDate, initialSlug, initialAmount
   }
 
   return (
-    <div className="hairline overflow-hidden rounded-[2px] bg-horizon">
+    <div
+      className={
+        surface === "glass" ? "glass overflow-hidden rounded-[3px]" : "plate overflow-hidden rounded-[3px]"
+      }
+    >
       <div className="grid gap-0 lg:grid-cols-[0.85fr_1.15fr]">
         <div className="grid content-start gap-6 border-b border-border p-5 sm:p-8 lg:border-b-0 lg:border-r">
           {lockPlan || plans.length === 1 ? (

@@ -146,13 +146,17 @@ async function readBytes(response: Response, maxBytes: number | undefined): Prom
   return bytes;
 }
 
+export function backendEndpoint(baseUrl: string, path: string): string {
+  const base = baseUrl.endsWith("/") ? baseUrl : `${baseUrl}/`;
+  return new URL(path.replace(/^\//, ""), base).href;
+}
+
 function requestBody(init: BackendRequest): BodyInit | undefined {
   if (init.form) return init.form;
   return init.json === undefined ? undefined : JSON.stringify(init.json);
 }
 
 export function createBackendClient(options: BackendClientOptions): BackendClient {
-  const baseUrl = options.baseUrl.replace(/\/+$/, "");
   const doFetch = options.fetch ?? fetch;
   const timeoutMs = options.timeoutMs ?? DEFAULT_TIMEOUT_MS;
 
@@ -178,7 +182,7 @@ export function createBackendClient(options: BackendClientOptions): BackendClien
       let response: Response;
       let text: string;
       try {
-        response = await doFetch(`${baseUrl}${path}`, {
+        response = await doFetch(backendEndpoint(options.baseUrl, path), {
           method: init.method ?? "GET",
           headers,
           body: requestBody(init),

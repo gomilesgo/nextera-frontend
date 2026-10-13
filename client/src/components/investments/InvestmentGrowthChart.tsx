@@ -95,13 +95,13 @@ export function InvestmentGrowthChart({ points, indicative }: { points: GrowthCh
         >
           <defs>
             <linearGradient id={gradientId} x1="0" x2="0" y1="0" y2="1">
-              <stop offset="0%" stopColor="#d4a24a" stopOpacity="0.28" />
-              <stop offset="100%" stopColor="#d4a24a" stopOpacity="0.02" />
+              <stop offset="0%" stopColor="var(--color-gold)" stopOpacity="0.28" />
+              <stop offset="100%" stopColor="var(--color-gold)" stopOpacity="0.02" />
             </linearGradient>
           </defs>
           {ticks.map((tick) => (
             <g key={tick}>
-              <line x1={PAD.left} x2={WIDTH - PAD.right} y1={y(tick)} y2={y(tick)} stroke="#f3ebd8" strokeOpacity={tick === 0 ? 0.22 : 0.07} />
+              <line x1={PAD.left} x2={WIDTH - PAD.right} y1={y(tick)} y2={y(tick)} stroke="var(--color-parchment)" strokeOpacity={tick === 0 ? 0.22 : 0.07} />
               <text x={PAD.left - 10} y={y(tick)} textAnchor="end" dominantBaseline="middle" className="fill-dust font-mono text-[12px]">
                 {compactRupees(tick)}
               </text>
@@ -120,16 +120,16 @@ export function InvestmentGrowthChart({ points, indicative }: { points: GrowthCh
           ))}
           {area ? <path d={area} fill={`url(#${gradientId})`} /> : null}
           {projected.length > 1 ? (
-            <path d={path(projected)} fill="none" stroke="#f3ebd8" strokeOpacity={0.5} strokeWidth={2} strokeDasharray="5 5" />
+            <path d={path(projected)} fill="none" stroke="var(--color-parchment)" strokeOpacity={0.5} strokeWidth={2} strokeDasharray="5 5" />
           ) : null}
           {credited.length > 1 ? (
-            <path d={creditedPath} fill="none" stroke="#d4a24a" strokeWidth={2.5} strokeLinejoin="round" strokeLinecap="round" />
+            <path d={creditedPath} fill="none" stroke="var(--color-gold)" strokeWidth={2.5} strokeLinejoin="round" strokeLinecap="round" />
           ) : null}
-          <circle cx={x(creditedUntil)} cy={y(creditedTotal)} r={4.5} fill="#d4a24a" stroke="#0c1c24" strokeWidth={2} />
+          <circle cx={x(creditedUntil)} cy={y(creditedTotal)} r={4.5} fill="var(--color-gold)" stroke="var(--color-horizon)" strokeWidth={2} />
           {focus ? (
             <g>
-              <line x1={x(focus.month)} x2={x(focus.month)} y1={PAD.top} y2={y(0)} stroke="#f3ebd8" strokeOpacity={0.35} strokeDasharray="3 3" />
-              <circle cx={x(focus.month)} cy={y(focus.returnsPaise)} r={5} fill={focus.credited ? "#d4a24a" : "#f3ebd8"} stroke="#0c1c24" strokeWidth={2} />
+              <line x1={x(focus.month)} x2={x(focus.month)} y1={PAD.top} y2={y(0)} stroke="var(--color-parchment)" strokeOpacity={0.35} strokeDasharray="3 3" />
+              <circle cx={x(focus.month)} cy={y(focus.returnsPaise)} r={5} fill={focus.credited ? "var(--color-gold)" : "var(--color-parchment)"} stroke="var(--color-horizon)" strokeWidth={2} />
             </g>
           ) : null}
         </svg>

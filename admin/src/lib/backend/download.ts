@@ -1,8 +1,8 @@
 import "server-only";
 import { headers } from "next/headers";
-import { parseServerEnv } from "@/lib/env";
+import { parseServerEnv, runtimeServerEnv } from "@/lib/env";
 import { clientIp } from "@/lib/request";
-import { CLIENT_IP_HEADER, DEFAULT_TIMEOUT_MS, parseErrorBody } from "./client";
+import { backendEndpoint, CLIENT_IP_HEADER, DEFAULT_TIMEOUT_MS, parseErrorBody } from "./client";
 import type { BackendError } from "./client";
 
 export type BackendDownload =
@@ -36,7 +36,6 @@ function isTimeout(error: unknown): boolean {
 }
 
 export function createDownloadClient(options: DownloadClientOptions) {
-  const baseUrl = options.baseUrl.replace(/\/+$/, "");
   const doFetch: typeof fetch = options.fetch ?? ((input, init) => fetch(input, init));
   const timeoutMs = options.timeoutMs ?? DEFAULT_TIMEOUT_MS;
 
@@ -56,7 +55,7 @@ export function createDownloadClient(options: DownloadClientOptions) {
     const timer = setTimeout(() => controller.abort(new DOMException("Timed out", "TimeoutError")), timeoutMs);
     let response: Response;
     try {
-      response = await doFetch(`${baseUrl}${path}`, {
+      response = await doFetch(backendEndpoint(options.baseUrl, path), {
         method: "GET",
         headers: requestHeaders,
         cache: "no-store",
@@ -93,7 +92,7 @@ export async function downloadFromBackend(
   init: Omit<DownloadRequest, "ip" | "userAgent">,
 ): Promise<BackendDownload> {
   if (!client) {
-    const env = parseServerEnv(process.env);
+    const env = parseServerEnv(runtimeServerEnv());
     client = createDownloadClient({
       baseUrl: env.NEXTERA_BACKEND_URL,
       serviceKey: env.NEXTERA_ADMIN_SERVICE_KEY,

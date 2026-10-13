@@ -3,7 +3,17 @@ import { formatBps, formatPaise, monthlyReturnPaise } from "@nextera/contracts";
 import type { Plan } from "@nextera/contracts";
 import { formatTenure } from "@/lib/plans";
 
-export function PlanCard({ plan, href, cta }: { plan: Plan; href?: string; cta?: string }) {
+export function PlanCard({
+  plan,
+  href,
+  cta,
+  surface = "solid",
+}: {
+  plan: Plan;
+  href?: string;
+  cta?: string;
+  surface?: "solid" | "glass";
+}) {
   const example = monthlyReturnPaise(plan.minPaise, plan.rateBps);
   const body = (
     <>
@@ -42,8 +52,10 @@ export function PlanCard({ plan, href, cta }: { plan: Plan; href?: string; cta?:
     </>
   );
 
-  const className =
-    "group hairline flex h-full flex-col rounded-[2px] bg-horizon/70 p-6 transition-colors sm:p-7";
+  const glass = surface === "glass";
+  const className = glass
+    ? "group glass flex h-full flex-col rounded-[3px] p-6 transition-colors sm:p-7"
+    : "group plate flex h-full flex-col rounded-[3px] p-6 transition-colors sm:p-7";
 
   if (!href) return <article className={className}>{body}</article>;
 
@@ -51,7 +63,11 @@ export function PlanCard({ plan, href, cta }: { plan: Plan; href?: string; cta?:
     <article className="h-full">
       <Link
         href={href}
-        className={`${className} hover:border-gold/40 hover:bg-horizon focus-visible:border-gold/60`}
+        className={`${className} ${
+          glass
+            ? "hover:bg-parchment/10 focus-visible:border-lagoon"
+            : "hover:border-gold/45 focus-visible:border-gold/60"
+        }`}
         aria-label={`${plan.name}: ${formatBps(plan.rateBps)} a year for ${formatTenure(plan.tenureMonths)}`}
       >
         {body}

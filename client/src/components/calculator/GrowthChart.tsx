@@ -80,8 +80,8 @@ export function GrowthChart({ points }: { points: GrowthPoint[] }) {
         >
           <defs>
             <linearGradient id={gradientId} x1="0" x2="0" y1="0" y2="1">
-              <stop offset="0%" stopColor="#d4a24a" stopOpacity="0.28" />
-              <stop offset="100%" stopColor="#d4a24a" stopOpacity="0.02" />
+              <stop offset="0%" stopColor="var(--color-gold)" stopOpacity="0.28" />
+              <stop offset="100%" stopColor="var(--color-gold)" stopOpacity="0.02" />
             </linearGradient>
           </defs>
           {ticks.map((tick) => (
@@ -91,7 +91,7 @@ export function GrowthChart({ points }: { points: GrowthPoint[] }) {
                 x2={WIDTH - PAD.right}
                 y1={y(tick)}
                 y2={y(tick)}
-                stroke="#f3ebd8"
+                stroke="var(--color-parchment)"
                 strokeOpacity={tick === 0 ? 0.22 : 0.07}
               />
               <text
@@ -117,7 +117,7 @@ export function GrowthChart({ points }: { points: GrowthPoint[] }) {
             </text>
           ))}
           <path d={area} fill={`url(#${gradientId})`} />
-          <path d={line} fill="none" stroke="#d4a24a" strokeWidth={2} strokeLinejoin="round" strokeLinecap="round" />
+          <path d={line} fill="none" stroke="var(--color-gold)" strokeWidth={2} strokeLinejoin="round" strokeLinecap="round" />
           {focus ? (
             <g>
               <line
@@ -125,14 +125,14 @@ export function GrowthChart({ points }: { points: GrowthPoint[] }) {
                 x2={x(focus.month)}
                 y1={PAD.top}
                 y2={y(0)}
-                stroke="#f3ebd8"
+                stroke="var(--color-parchment)"
                 strokeOpacity={0.35}
                 strokeDasharray="3 3"
               />
-              <circle cx={x(focus.month)} cy={y(focus.returnsPaise)} r={5} fill="#d4a24a" stroke="#0c1c24" strokeWidth={2} />
+              <circle cx={x(focus.month)} cy={y(focus.returnsPaise)} r={5} fill="var(--color-gold)" stroke="var(--color-horizon)" strokeWidth={2} />
             </g>
           ) : (
-            <circle cx={x(lastMonth)} cy={y(last.returnsPaise)} r={4} fill="#d4a24a" stroke="#0c1c24" strokeWidth={2} />
+            <circle cx={x(lastMonth)} cy={y(last.returnsPaise)} r={4} fill="var(--color-gold)" stroke="var(--color-horizon)" strokeWidth={2} />
           )}
         </svg>
         {focus ? (

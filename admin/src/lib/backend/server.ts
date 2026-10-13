@@ -1,6 +1,6 @@
 import "server-only";
 import { headers } from "next/headers";
-import { parseServerEnv } from "@/lib/env";
+import { parseServerEnv, runtimeServerEnv } from "@/lib/env";
 import { clientIp } from "@/lib/request";
 import { createBackendClient } from "./client";
 import type { BackendClient, BackendRequest, BackendResult } from "./client";
@@ -9,7 +9,7 @@ let client: BackendClient | null = null;
 
 function backendClient(): BackendClient {
   if (!client) {
-    const env = parseServerEnv(process.env);
+    const env = parseServerEnv(runtimeServerEnv());
     client = createBackendClient({
       baseUrl: env.NEXTERA_BACKEND_URL,
       serviceKey: env.NEXTERA_ADMIN_SERVICE_KEY,

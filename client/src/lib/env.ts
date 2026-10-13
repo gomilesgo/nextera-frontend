@@ -14,6 +14,14 @@ const serverEnvSchema = z.object({
 
 export type ServerEnv = z.infer<typeof serverEnvSchema>;
 
+const runtimeKeys = ["NEXTERA_BACKEND_URL", "NEXTERA_PORTAL_SERVICE_KEY", "NEXTERA_BACKEND_TIMEOUT_MS"] as const;
+
+export function runtimeServerEnv(): Record<string, string | undefined> {
+  const source: Record<string, string | undefined> = {};
+  for (const key of runtimeKeys) source[key] = process.env[key];
+  return source;
+}
+
 export function parseServerEnv(source: Record<string, string | undefined>): ServerEnv {
   const result = serverEnvSchema.safeParse(source);
   if (!result.success) {

@@ -2,13 +2,13 @@
 
 import { useEffect } from "react";
 import Link from "next/link";
-import { IBM_Plex_Mono, Instrument_Sans, Syne } from "next/font/google";
+import { IBM_Plex_Mono, IBM_Plex_Sans, IBM_Plex_Serif } from "next/font/google";
 import { brand } from "@/lib/site";
 import "./globals.css";
 
-const syne = Syne({ subsets: ["latin"], variable: "--font-syne", weight: ["600"] });
-const instrument = Instrument_Sans({ subsets: ["latin"], variable: "--font-instrument", weight: ["400", "500"] });
-const plex = IBM_Plex_Mono({ subsets: ["latin"], variable: "--font-plex", weight: ["400"] });
+const plexSerif = IBM_Plex_Serif({ subsets: ["latin"], variable: "--font-plex-serif", weight: ["500"] });
+const plexSans = IBM_Plex_Sans({ subsets: ["latin"], variable: "--font-plex-sans", weight: ["400", "500"] });
+const plexMono = IBM_Plex_Mono({ subsets: ["latin"], variable: "--font-plex-mono", weight: ["400"] });
 
 export default function GlobalError({ error, retry }: { error: Error & { digest?: string }; retry: () => void }) {
   useEffect(() => {
@@ -16,7 +16,7 @@ export default function GlobalError({ error, retry }: { error: Error & { digest?
   }, [error]);
 
   return (
-    <html lang="en-IN" className={`${syne.variable} ${instrument.variable} ${plex.variable} h-full antialiased`}>
+    <html lang="en-IN" className={`${plexSerif.variable} ${plexSans.variable} ${plexMono.variable} h-full antialiased`}>
       <body className="min-h-full bg-inkwell font-sans text-parchment">
         <title>{`Something went wrong · ${brand.name}`}</title>
         <main className="orbit-glow flex min-h-svh items-center justify-center px-4">
@@ -32,7 +32,7 @@ export default function GlobalError({ error, retry }: { error: Error & { digest?
               <button
                 type="button"
                 onClick={() => retry()}
-                className="inline-flex min-h-11 items-center justify-center rounded-full bg-gold px-5 text-sm font-medium text-ink hover:bg-parchment"
+                className="inline-flex min-h-11 items-center justify-center rounded-full bg-gold px-5 text-sm font-medium text-ink hover:brightness-110"
               >
                 Try again
               </button>
